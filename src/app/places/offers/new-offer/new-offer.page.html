@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/places/tabs/offers"></ion-back-button>
+    </ion-buttons>
+    <ion-title>new-offer</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onCreateOffer()" [disabled]="!form.valid || !form.get('image').value">
+        <ion-icon name="checkmark-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form">
+    <ion-grid>
+      <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Title</ion-label>
+            <ion-input type="text" autocomplete autocorrect formControlName="title"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Short Description</ion-label>
+            <ion-textarea rows="3" formControlName="description"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Price</ion-label>
+            <ion-input type="number" formControlName="price"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Available From</ion-label>
+            <!-- <ion-datetime min="2019-01-01" max="2024-12-31"></ion-datetime> -->
+            <!-- <ion-input id="triggercheckInStartDate" [value]="checkInStartDate" class="ion-text-end">
+            </ion-input>[(ngModel)]="checkInStartDate" value="{{ dateFrom | date: 'dd MMM yyyy HH:MM' }}"-->
+            <ion-input  id="date"  [value]="form.get('dateFrom').value | date: 'dd MMM yyyy HH:MM'"></ion-input>
+            <ion-popover trigger="date" size="cover" arrow="false" id="popover-bottom">
+              <ng-template>
+                <ion-datetime presentation="time-date" formControlName="dateFrom"
+                showDefaultButtons=true  min="2019-01-01" max="2024-12-31"></ion-datetime>
+              </ng-template>
+            </ion-popover>
+            </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Available To</ion-label>
+            <ion-input  id="date1"  [value]="form.get('dateTo').value | date: 'dd MMM yyyy HH:MM'"></ion-input>
+            <ion-popover trigger="date1" size="cover" arrow="false" id="popover-bottom">
+              <ng-template>
+                <ion-datetime presentation="time-date" formControlName="dateTo"
+                showDefaultButtons=true min="2019-01-02" max="2024-12-31"></ion-datetime>
+              </ng-template>
+            </ion-popover>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <app-location-picker (locationPick)="onLocationPicked($event)" [showPreview]="form.get('location').value"></app-location-picker>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <app-image-picker (imagePick)="onImagePicked($event)" [showPreview]="form.get('image').value"></app-image-picker>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+
